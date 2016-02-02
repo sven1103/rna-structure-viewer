@@ -1,11 +1,11 @@
 package models.nucleotide3d;
 
-import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import models.misc.Atom;
 import models.misc.AtomMapping;
 import models.misc.Constants;
+import models.misc.GlobalSettings;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,7 +18,8 @@ public class Cytosin extends PyrimidineModel {
 
     public Cytosin(){
         super();
-        this.material = new PhongMaterial(Color.ORANGERED);
+        this.baseType = BaseType.C;
+        this.material = GlobalSettings.DEFAULT_BASE_MATERIALS.get(baseType);
     }
 
 
@@ -139,4 +140,6 @@ public class Cytosin extends PyrimidineModel {
                 bond2.createConnection(0.02), bond.createConnection(0.02));
         return this;
     }
+
+
 }

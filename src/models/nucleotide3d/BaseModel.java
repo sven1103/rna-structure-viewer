@@ -8,13 +8,16 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.MeshView;
 import models.misc.Atom;
 import models.misc.Constants;
+import models.misc.GlobalSettings;
 
 import java.util.HashMap;
 
 /**
  * Created by sven on 1/17/16.
  */
-public class BaseModel implements Cloneable{
+public class BaseModel implements Cloneable, IColorizable{
+
+    protected BaseType baseType;
 
     protected MeshView meshView;
 
@@ -31,6 +34,7 @@ public class BaseModel implements Cloneable{
     public BaseModel(){
 
     }
+
 
     public void setMaterial(PhongMaterial newMaterial){
         this.material = newMaterial;
@@ -76,5 +80,18 @@ public class BaseModel implements Cloneable{
         return null;
     }
 
+    @Override
+    public void setColor() {
+        this.meshView.setMaterial(GlobalSettings.SELECTED_MATERIAL);
+    }
 
+    @Override
+    public void resetColor() {
+        this.meshView.setMaterial(GlobalSettings.DEFAULT_BASE_MATERIALS.get(this.baseType));
+    }
+
+    @Override
+    public void setOriginalColor() {
+
+    }
 }

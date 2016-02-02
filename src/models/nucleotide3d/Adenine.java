@@ -6,6 +6,7 @@ import javafx.scene.shape.Sphere;
 import models.misc.Atom;
 import models.misc.AtomMapping;
 import models.misc.Constants;
+import models.misc.GlobalSettings;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,7 +19,8 @@ public class Adenine extends PurineModel {
 
     public Adenine(){
         super();
-        this.material = new PhongMaterial(Color.LIGHTSKYBLUE);
+        this.baseType = BaseType.A;
+        this.material = GlobalSettings.DEFAULT_BASE_MATERIALS.get(baseType);
     }
 
     @Override

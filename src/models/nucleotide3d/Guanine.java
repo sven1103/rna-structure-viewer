@@ -6,6 +6,7 @@ import javafx.scene.shape.Sphere;
 import models.misc.Atom;
 import models.misc.AtomMapping;
 import models.misc.Constants;
+import models.misc.GlobalSettings;
 
 import java.util.Arrays;
 
@@ -16,7 +17,8 @@ public class Guanine extends PurineModel {
 
     public Guanine(){
         super();
-        this.material = new PhongMaterial(Color.ORANGERED);
+        this.baseType = BaseType.G;
+        this.material = GlobalSettings.DEFAULT_BASE_MATERIALS.get(baseType);
     }
 
     @Override

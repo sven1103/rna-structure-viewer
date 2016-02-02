@@ -4,6 +4,7 @@ import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
 import models.misc.Atom;
 import models.misc.AtomMapping;
+import models.misc.GlobalSettings;
 
 /**
  * Created by svenfillinger on 13.12.15.
@@ -82,6 +83,5 @@ abstract class PyrimidineModel extends BaseModel{
     public void resetCoords(){
         this.atomCoords = new float[NUMBER_ATOMS];
     }
-
 
 }

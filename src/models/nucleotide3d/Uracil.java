@@ -6,6 +6,7 @@ import javafx.scene.shape.Sphere;
 import models.misc.Atom;
 import models.misc.AtomMapping;
 import models.misc.Constants;
+import models.misc.GlobalSettings;
 
 import java.util.Arrays;
 
@@ -17,7 +18,8 @@ public class Uracil extends PyrimidineModel{
 
     public Uracil(){
         super();
-        this.material = new PhongMaterial(Color.LIGHTSKYBLUE);
+        this.baseType = BaseType.U;
+        this.material = GlobalSettings.DEFAULT_BASE_MATERIALS.get(baseType);
     }
 
 

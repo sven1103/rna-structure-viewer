@@ -132,12 +132,14 @@ public class Nucleotide implements Cloneable, IColorizable{
     public void setColor() {
         if(this.ribose != null)
             this.ribose.setMaterial(GlobalSettings.SELECTED_MATERIAL);
+        this.base.setColor();
     }
 
     @Override
     public void resetColor() {
         if(this.ribose != null)
             this.ribose.setMaterial((GlobalSettings.RIBOSE_MATERIAL));
+        this.base.resetColor();
     }
 
     @Override

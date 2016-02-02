@@ -71,19 +71,6 @@ public class RnaStrucViewer3dView {
         /*
         Make the scene
          */
-
-        finalView = new StackPane();
-
-        menuBar = new MenuBar();
-
-        menu = new Menu("File");
-
-        openFile = new MenuItem("Open File");
-
-        menu.getItems().addAll(openFile);
-
-        menuBar.getMenus().addAll(menu);
-
         scene3d = new SubScene(structures, INIT_SCENE_WIDTH, INIT_SCENE_HEIGHT, true, SceneAntialiasing.BALANCED);
         scene3d.setFill(Color.WHITE);
 
@@ -97,16 +84,6 @@ public class RnaStrucViewer3dView {
 
         this.messageScreen.editableProperty().setValue(false);
 
-
-        BorderPane mainView = new BorderPane();
-
-        mainView.setTop(menuBar);
-
-        mainView.setBottom(messageScreen);
-
-        mainView.setPickOnBounds(false);
-
-        finalView.getChildren().addAll(scene3d, mainView);
 
 
         /*
@@ -122,7 +99,6 @@ public class RnaStrucViewer3dView {
 
         scene3d.setCamera(camera);
 
-        totalScene = new Scene(finalView, INIT_SCENE_WIDTH, INIT_SCENE_HEIGHT);
 
 
         /*

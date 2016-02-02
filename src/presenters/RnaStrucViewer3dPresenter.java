@@ -1,6 +1,9 @@
 package presenters;
 
 import javafx.beans.binding.BooleanBinding;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -10,6 +13,7 @@ import models.pdb.PDBparser;
 import models.selection.MySelectionModel;
 import system.PDBparseException;
 import utils.PseudoKnotSolver;
+import views.MainView;
 import views.RnaStrucViewer3dView;
 
 import java.io.File;
@@ -33,9 +37,15 @@ public class RnaStrucViewer3dPresenter {
 
     public HashSet<Pair<Integer, Integer>> basePairs = new HashSet<>();
 
+    private Nucleotide[] nucleotides = new Nucleotide[0];
+
     public List<Atom> atomList;
 
     public RnaStrucViewer3dModel model;
+
+    public MainView mainView;
+
+    final KeyCode DESELECTION = KeyCode.D;
 
     String helpMessage = String.format("Hold SHIFT for zooming in/out\n" +
             "Hold CTRL for moving the molecule\n" +
@@ -52,10 +62,12 @@ public class RnaStrucViewer3dPresenter {
      * Default constructor
      * @param view The view
      */
-    public RnaStrucViewer3dPresenter(RnaStrucViewer3dView view, Stage stage, RnaStrucViewer3dModel model){
+    public RnaStrucViewer3dPresenter(RnaStrucViewer3dView view, Stage stage,
+                                     RnaStrucViewer3dModel model, MainView mainView){
         this.view = view;
         this.stage = stage;
         this.model = model;
+        this.mainView = mainView;
         initControls();
     }
 
@@ -66,31 +78,44 @@ public class RnaStrucViewer3dPresenter {
         /*
         Bind the subscene width and height properties to the parent scene properties.
          */
-        view.scene3d.widthProperty().bind(view.totalScene.widthProperty());
-        view.scene3d.heightProperty().bind(view.totalScene.heightProperty());
+        view.scene3d.widthProperty().bind(mainView.finalScene.widthProperty());
+        view.scene3d.heightProperty().bind(mainView.finalScene.heightProperty());
 
         /*
         Update camera when window is resized
          */
-        view.totalScene.widthProperty().addListener((observable, oldValue, newValue) -> {
+        mainView.finalScene.widthProperty().addListener((observable, oldValue, newValue) -> {
             view.camera.setTranslateX(-newValue.doubleValue()/2);
             view.update();
         });
 
-        view.totalScene.heightProperty().addListener((observable, oldValue, newValue) -> {
+        mainView.finalScene.heightProperty().addListener((observable, oldValue, newValue) -> {
             view.camera.setTranslateY(-newValue.doubleValue()/2);
             view.update();
         });
 
+        mainView.finalScene.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode() == DESELECTION){
+                    if(nucleotideSelectionModel != null){
+                        nucleotideSelectionModel.clearSelection();
+                        refreshSelectionStatus(nucleotides);
+                    }
 
-        view.totalScene.setOnMousePressed(event -> {
+                }
+            }
+        });
+
+
+        view.scene3d.setOnMousePressed(event -> {
             mousePosX = event.getSceneX();
             mousePosY = event.getSceneY();
             mouseOldX = event.getSceneX();
             mouseOldY = event.getSceneY();
         });
 
-        view.totalScene.setOnMouseDragged(event -> {
+        view.scene3d.setOnMouseDragged(event -> {
             mouseOldX = mousePosX;
             mouseOldY = mousePosY;
             mousePosX = event.getSceneX();
@@ -109,7 +134,7 @@ public class RnaStrucViewer3dPresenter {
                 view.rx.setAngle(view.rx.getAngle() - mouseDeltaY);
             }});
 
-        view.openFile.setOnAction((value) -> openFile());
+        mainView.openFile.setOnAction((value) -> openFile());
     }
 
 
@@ -126,7 +151,7 @@ public class RnaStrucViewer3dPresenter {
                 new FileChooser.ExtensionFilter("PDB (pdb structure file)", "*.pdb"),
                 new FileChooser.ExtensionFilter("All files", "*.*"));
         // Set default directory
-        File defaultDirectory = new File("/home/fillinger/Downloads");
+        File defaultDirectory = new File("/home/sven/Downloads");
 
         if(defaultDirectory.exists())
             view.fileChooser.setInitialDirectory(defaultDirectory);
@@ -165,9 +190,8 @@ public class RnaStrucViewer3dPresenter {
                     model.getBoundsGroup(), model.getPhosphateGroup());
 
             // Create the selection model instance
-            Nucleotide[] nucleotides = new Nucleotide[model.getNucleotideList().size()];
+            nucleotides = new Nucleotide[model.getNucleotideList().size()];
             for(int i = 0; i < nucleotides.length; i++){
-                System.err.println(model.getNucleotideList().get(i).getSelectedProperty().toString());
                 nucleotides[i] = model.getNucleotideList().get(i);
             }
 
@@ -226,7 +250,6 @@ public class RnaStrucViewer3dPresenter {
      */
     public void refreshSelectionStatus(Nucleotide[] nucleotides){
         for (Nucleotide nucleotide : nucleotides) {
-            System.out.println(nucleotide.getSelectedProperty());
             if(nucleotide.getSelectedProperty().getValue()){
                 nucleotide.setColor();
             } else{

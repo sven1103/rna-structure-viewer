@@ -209,28 +209,28 @@ public class RnaStrucViewer3dModel {
 
         baseSugarBond.fullBondSet.addListener((observable, oldValue, newValue) -> {
             if(newValue){
-                bondList.add(baseSugarBond.createConnection(0.02));
+                bondList.add(baseSugarBond.createConnection(0.05));
                 baseSugarBond.resetBond();
             }
         });
 
         phosphateConnection.fullBondSet.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                bondList.add(phosphateConnection.createConnection(0.2));
+                bondList.add(phosphateConnection.createConnection(0.4));
                 phosphateConnection.resetBond();
             }
         });
 
         threePrimeOP.fullBondSet.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                bondList.add(threePrimeOP.createConnection(0.03));
+                bondList.add(threePrimeOP.createConnection(0.05));
                 threePrimeOP.resetBond();
             }
         });
 
         fivePrimeOP.fullBondSet.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                bondList.add(fivePrimeOP.createConnection(0.03));
+                bondList.add(fivePrimeOP.createConnection(0.05));
                 fivePrimeOP.resetBond();
             }
         });

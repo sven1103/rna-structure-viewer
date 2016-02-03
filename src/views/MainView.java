@@ -78,9 +78,6 @@ public class MainView {
 
         topViewContainer.getChildren().addAll(menuBar, view1d.pane1d);
 
-
-        topViewContainer.setStyle("-fx-background-color: aqua");
-
         controlsView.setTop(topViewContainer);
 
         finalView = new StackPane();

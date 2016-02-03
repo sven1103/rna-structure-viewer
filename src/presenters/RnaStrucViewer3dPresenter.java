@@ -353,6 +353,8 @@ public class RnaStrucViewer3dPresenter {
         }
         view.structures.getChildren().addAll(this.model.setHbondList(hBondCollection).getHBondAs3D());
 
+        MainPresenter.primaryStructurePresenter.makePrimaryView(sequence.toString(), dotBracketNotation.toString());
+
         view.sendMessage(String.format("Sequence:\n%s", sequence.toString()));
         view.sendMessage(String.format("%s", dotBracketNotation.toString()));
     }

@@ -4,8 +4,8 @@
 }
 
 .nucleotide_text{
-    -fx-padding: 10 10 0 20;
-    -fx-font-size: 16;
+    -fx-padding: 2 0 0 20;
+    -fx-font-size: 14;
     -fx-font-family: "Courier";
 }
 

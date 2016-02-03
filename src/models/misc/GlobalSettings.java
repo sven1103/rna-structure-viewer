@@ -29,4 +29,10 @@ public class GlobalSettings {
         DEFAULT_BASE_MATERIALS.put(BaseType.U, new PhongMaterial(Color.LIGHTSKYBLUE));
     }
 
+    public static Color TEXT_SELECTED = Color.rgb(255,102,255);
+
+    public static Color TEXT_DEFAULT = Color.GRAY;
+
+    public static int DEFAULT_TEXT_SIZE = 12;
+
 }

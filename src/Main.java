@@ -1,7 +1,9 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
+import models.nucleotide1d.PrimaryStructureModel;
 import models.nucleotide3d.RnaStrucViewer3dModel;
 import presenters.MainPresenter;
+import presenters.PrimaryStructurePresenter;
 import presenters.RnaStrucViewer3dPresenter;
 import views.MainView;
 import views.PrimaryStructureView;
@@ -29,10 +31,13 @@ public class Main extends Application{
         RnaStrucViewer3dView view3d = RnaStrucViewer3dView.getInstance();
         PrimaryStructureView view1d = PrimaryStructureView.getInstance();
         MainView mainView = MainView.getInstance(view3d, view1d);
-        RnaStrucViewer3dModel model = new RnaStrucViewer3dModel();
-        RnaStrucViewer3dPresenter presenter = new RnaStrucViewer3dPresenter(view3d, primaryStage, model, mainView);
 
-        MainPresenter.setUpMainPresenter(presenter, view3d, mainView);
+        PrimaryStructureModel model1d = new PrimaryStructureModel();
+        RnaStrucViewer3dModel model = new RnaStrucViewer3dModel();
+
+        PrimaryStructurePresenter presenter1d = new PrimaryStructurePresenter(view1d, model1d);
+        RnaStrucViewer3dPresenter presenter = new RnaStrucViewer3dPresenter(view3d, primaryStage, model, mainView);
+        MainPresenter.setUpMainPresenter(presenter, view3d, mainView, presenter1d);
 
         primaryStage.setScene(mainView.finalScene);
 

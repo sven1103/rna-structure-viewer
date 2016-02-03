@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class RnaStrucViewer3dPresenter {
 
-    public MySelectionModel<Nucleotide> nucleotideSelectionModel;
+
 
     double mousePosX;
     double mousePosY;
@@ -98,8 +98,8 @@ public class RnaStrucViewer3dPresenter {
             @Override
             public void handle(KeyEvent event) {
                 if(event.getCode() == DESELECTION){
-                    if(nucleotideSelectionModel != null){
-                        nucleotideSelectionModel.clearSelection();
+                    if(SelectionModelPresenter.nucleotideSelectionModel != null){
+                        SelectionModelPresenter.nucleotideSelectionModel.clearSelection();
                         refreshSelectionStatus(nucleotides);
                     }
 
@@ -195,7 +195,7 @@ public class RnaStrucViewer3dPresenter {
                 nucleotides[i] = model.getNucleotideList().get(i);
             }
 
-            this.nucleotideSelectionModel = new MySelectionModel<>(nucleotides);
+            SelectionModelPresenter.nucleotideSelectionModel = new MySelectionModel<>(nucleotides);
 
             configureSelectionModel(nucleotides);
 
@@ -216,12 +216,12 @@ public class RnaStrucViewer3dPresenter {
             final int index=i;
             nucleotides[i].getNucleotide().setOnMouseClicked((e) ->{
                 if(!e.isShiftDown()){
-                    nucleotideSelectionModel.clearSelection();
+                    SelectionModelPresenter.nucleotideSelectionModel.clearSelection();
                 }
-                if(nucleotideSelectionModel.isSelected(index)){
-                    nucleotideSelectionModel.clearSelection(index);
+                if(SelectionModelPresenter.nucleotideSelectionModel.isSelected(index)){
+                    SelectionModelPresenter.nucleotideSelectionModel.clearSelection(index);
                 } else{
-                    nucleotideSelectionModel.select(index);
+                    SelectionModelPresenter.nucleotideSelectionModel.select(index);
                 }
                 refreshSelectionStatus(nucleotides);
             });
@@ -232,11 +232,11 @@ public class RnaStrucViewer3dPresenter {
             final int index=i;
             nucleotides[i].getSelectedProperty().bind(new BooleanBinding() {
                 {
-                    bind(nucleotideSelectionModel.getSelectedIndices());
+                    bind(SelectionModelPresenter.nucleotideSelectionModel.getSelectedIndices());
                 }
                 @Override
                 protected boolean computeValue() {
-                    return nucleotideSelectionModel.getSelectedIndices().contains(index);
+                    return SelectionModelPresenter.nucleotideSelectionModel.getSelectedIndices().contains(index);
                 }
             });
         }

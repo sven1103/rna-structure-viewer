@@ -4,6 +4,7 @@ import models.nucleotide3d.RnaStrucViewer3dModel;
 import presenters.MainPresenter;
 import presenters.RnaStrucViewer3dPresenter;
 import views.MainView;
+import views.PrimaryStructureView;
 import views.RnaStrucViewer3dView;
 
 /**
@@ -26,7 +27,8 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
 
         RnaStrucViewer3dView view3d = RnaStrucViewer3dView.getInstance();
-        MainView mainView = MainView.getInstance(view3d);
+        PrimaryStructureView view1d = PrimaryStructureView.getInstance();
+        MainView mainView = MainView.getInstance(view3d, view1d);
         RnaStrucViewer3dModel model = new RnaStrucViewer3dModel();
         RnaStrucViewer3dPresenter presenter = new RnaStrucViewer3dPresenter(view3d, primaryStage, model, mainView);
 

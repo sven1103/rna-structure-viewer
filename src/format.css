@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'Courier';
+    src: url('COURIER.TTF');
+}
+
+.nucleotide_text{
+    -fx-padding: 10 10 0 20;
+    -fx-font-size: 16;
+    -fx-font-family: "Courier";
+}
+
+.text-field{
+
+    -fx-background-color: aqua;
+
+}
+
+.text-field:focused {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background,-30%);
+}
+

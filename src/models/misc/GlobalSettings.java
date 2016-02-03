@@ -31,7 +31,7 @@ public class GlobalSettings {
 
     public static Color TEXT_SELECTED = Color.rgb(255,102,255);
 
-    public static Color TEXT_DEFAULT = Color.GRAY;
+    public static Color TEXT_DEFAULT = Color.WHITE;
 
     public static int DEFAULT_TEXT_SIZE = 12;
 

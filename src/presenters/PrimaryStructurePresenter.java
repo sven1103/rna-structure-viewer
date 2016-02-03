@@ -3,7 +3,6 @@ package presenters;
 import javafx.beans.binding.BooleanBinding;
 import models.nucleotide1d.PrimaryStructureModel;
 import models.nucleotide1d.SimpleNucleotide;
-import models.nucleotide3d.Nucleotide;
 import views.PrimaryStructureView;
 
 import java.util.List;

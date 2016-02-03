@@ -41,11 +41,14 @@ public class PrimaryStructureView {
         primStructureContainer.setStyle("-fx-padding: 10 0 0 0");
         primStructureContainer.setSpacing(0);
 
+        primStructureContainer.setMaxWidth(Double.MAX_VALUE);
+
+        primStructureContainer.setPrefHeight(65);
+        primStructureContainer.getStyleClass().addAll("text-field");
+
         pane1d = new ScrollPane();
         pane1d.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         pane1d.setContent(primStructureContainer);
-
-        primStructureContainer.setPrefHeight(65);
 
     }
 

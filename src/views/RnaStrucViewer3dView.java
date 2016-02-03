@@ -20,15 +20,11 @@ public class RnaStrucViewer3dView {
 
     public final double INIT_SCENE_HEIGHT = 600;
 
-    public StackPane finalView;
-
     public TextArea messageScreen;
 
     public static volatile RnaStrucViewer3dView instance;
 
     public SubScene scene3d;
-
-    public Scene totalScene;
 
     public Rotate ry;
 
@@ -39,12 +35,6 @@ public class RnaStrucViewer3dView {
     public Group structures = new Group();
 
     public PerspectiveCamera camera;
-
-    public MenuBar menuBar;
-
-    public Menu menu;
-
-    public MenuItem openFile;
 
     public FileChooser fileChooser;
 

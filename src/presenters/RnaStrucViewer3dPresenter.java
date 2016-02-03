@@ -150,7 +150,7 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
                 new FileChooser.ExtensionFilter("PDB (pdb structure file)", "*.pdb"),
                 new FileChooser.ExtensionFilter("All files", "*.*"));
         // Set default directory
-        File defaultDirectory = new File("/home/sven/Downloads");
+        File defaultDirectory = new File("/home/fillinger/Downloads");
 
         if(defaultDirectory.exists())
             view.fileChooser.setInitialDirectory(defaultDirectory);

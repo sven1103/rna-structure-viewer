@@ -1,5 +1,7 @@
 package views;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -8,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.WindowEvent;
 
 /**
  * Created by sven on 2/2/16.
@@ -78,7 +81,10 @@ public class MainView {
 
         topViewContainer.getChildren().addAll(menuBar, view1d.pane1d);
 
+        topViewContainer.setFillWidth(true);
+
         controlsView.setTop(topViewContainer);
+
 
         finalView = new StackPane();
 
@@ -91,6 +97,12 @@ public class MainView {
 
         finalScene.getStylesheets().add("format.css");
 
-        controlsView.getTop().getStyleClass().addAll("textfield");
+        //view1d.primStructureContainer.setPrefWidth(finalScene.getWidth()-2);
+
+        finalScene.heightProperty().addListener((observable, oldValue, newValue) -> {
+            view1d.primStructureContainer.setPrefWidth(finalScene.getWidth()-2);
+        });
+
+        view1d.primStructureContainer.autosize();
     }
 }

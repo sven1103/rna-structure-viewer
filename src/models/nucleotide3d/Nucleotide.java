@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
+import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import models.misc.GlobalSettings;
 
@@ -130,15 +131,19 @@ public class Nucleotide implements Cloneable, IColorizable{
 
     @Override
     public void setColor() {
-        if(this.ribose != null)
+        if(this.ribose != null){
             this.ribose.setMaterial(GlobalSettings.SELECTED_MATERIAL);
+        }
+
         this.base.setColor();
     }
 
     @Override
     public void resetColor() {
-        if(this.ribose != null)
+        if(this.ribose != null){
             this.ribose.setMaterial((GlobalSettings.RIBOSE_MATERIAL));
+        }
+
         this.base.resetColor();
     }
 

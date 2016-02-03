@@ -48,5 +48,6 @@ public class SimpleNucleotide extends Text implements IColorizable{
     @Override
     public void setOriginalColor() {
         this.setFill(GlobalSettings.TEXT_DEFAULT);
+        this.getStyleClass().addAll("nucleotide_text");
     }
 }

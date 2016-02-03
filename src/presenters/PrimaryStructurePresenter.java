@@ -3,6 +3,7 @@ package presenters;
 import javafx.beans.binding.BooleanBinding;
 import models.nucleotide1d.PrimaryStructureModel;
 import models.nucleotide1d.SimpleNucleotide;
+import models.nucleotide3d.Nucleotide;
 import views.PrimaryStructureView;
 
 import java.util.List;
@@ -36,28 +37,49 @@ public class PrimaryStructurePresenter implements IRefresher {
         List<SimpleNucleotide> structure = primaryModel.getStructureList();
         for(SimpleNucleotide nucleotide : structure){
             final int index = structure.indexOf(nucleotide);
-            nucleotide.setOnMouseClicked(e -> {
-                if(!e.isShiftDown()){
-                    SelectionModelPresenter.nucleotideSelectionModel.clearSelection();
-                }
-                if(SelectionModelPresenter.nucleotideSelectionModel.isSelected(index)){
-                    SelectionModelPresenter.nucleotideSelectionModel.clearSelection(index);
-                } else{
-                    SelectionModelPresenter.nucleotideSelectionModel.select(index);
-                }
-                MainPresenter.refreshAll();
-            });
 
-            nucleotide.isSelectedProperty().bind(new BooleanBinding() {
-                {
-                    bind(SelectionModelPresenter.nucleotideSelectionModel.getSelectedIndices());
-                }
-                @Override
-                protected boolean computeValue() {
-                    return SelectionModelPresenter.nucleotideSelectionModel.getSelectedIndices().contains(index);
-                }
-            });
+            setSelectionModelConnection(nucleotide, index);
+
+            bindToSelectionModel(nucleotide, index);
+
         }
+
+        List<SimpleNucleotide> annotation = primaryModel.getNotationList();
+        for(SimpleNucleotide nucleotide : annotation){
+            final int index = annotation.indexOf(nucleotide);
+
+            setSelectionModelConnection(nucleotide, index);
+
+            bindToSelectionModel(nucleotide, index);
+        }
+    }
+
+
+    private void bindToSelectionModel(SimpleNucleotide nucleotide, int index){
+        final int finalIndex = index;
+        nucleotide.isSelectedProperty().bind(new BooleanBinding() {
+            {
+                bind(SelectionModelPresenter.nucleotideSelectionModel.getSelectedIndices());
+            }
+            @Override
+            protected boolean computeValue() {
+                return SelectionModelPresenter.nucleotideSelectionModel.getSelectedIndices().contains(finalIndex);
+            }
+        });
+    }
+
+    private void setSelectionModelConnection(SimpleNucleotide nucleotide, int index){
+        nucleotide.setOnMouseClicked(e -> {
+            if(!e.isShiftDown()){
+                SelectionModelPresenter.nucleotideSelectionModel.clearSelection();
+            }
+            if(SelectionModelPresenter.nucleotideSelectionModel.isSelected(index)){
+                SelectionModelPresenter.nucleotideSelectionModel.clearSelection(index);
+            } else{
+                SelectionModelPresenter.nucleotideSelectionModel.select(index);
+            }
+            MainPresenter.refreshAll();
+        });
     }
 
     private void init(){
@@ -76,5 +98,13 @@ public class PrimaryStructurePresenter implements IRefresher {
                 nucleotide.resetColor();
             }
         }
+        for(SimpleNucleotide nucleotide : primaryModel.getNotationList()){
+            if(nucleotide.isSelectedProperty().get()){
+                nucleotide.setColor();
+            } else{
+                nucleotide.resetColor();
+            }
+        }
+
     }
 }

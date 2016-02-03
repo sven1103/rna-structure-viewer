@@ -42,7 +42,7 @@ public class SimpleNucleotide extends Text implements IColorizable{
 
     @Override
     public void resetColor() {
-
+        this.setFill(GlobalSettings.TEXT_DEFAULT);
     }
 
     @Override

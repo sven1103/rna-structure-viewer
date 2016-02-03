@@ -25,4 +25,9 @@ public class MainPresenter {
         primaryStructurePresenter = _primaryPresenter;
     }
 
+    public static void refreshAll(){
+        presenter3d.refreshSelectionStatus();
+        primaryStructurePresenter.refreshSelectionStatus();
+    }
+
 }

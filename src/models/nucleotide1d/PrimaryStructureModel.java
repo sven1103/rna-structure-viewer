@@ -1,5 +1,6 @@
 package models.nucleotide1d;
 
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
@@ -72,6 +73,14 @@ public class PrimaryStructureModel {
 
     public TextFlow getNotation(){
         return this.notation;
+    }
+
+    public List<SimpleNucleotide> getStructureList(){
+        return this.primaryStructureList;
+    }
+
+    public List<SimpleNucleotide> getNotationList(){
+        return this.annotationList;
     }
 
 }

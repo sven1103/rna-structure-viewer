@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Created by sven on 12/12/15.
  */
-public class RnaStrucViewer3dPresenter {
+public class RnaStrucViewer3dPresenter implements IRefresher{
 
 
 
@@ -100,13 +100,12 @@ public class RnaStrucViewer3dPresenter {
                 if(event.getCode() == DESELECTION){
                     if(SelectionModelPresenter.nucleotideSelectionModel != null){
                         SelectionModelPresenter.nucleotideSelectionModel.clearSelection();
-                        refreshSelectionStatus(nucleotides);
+                        MainPresenter.refreshAll();
                     }
 
                 }
             }
         });
-
 
         view.scene3d.setOnMousePressed(event -> {
             mousePosX = event.getSceneX();
@@ -223,7 +222,7 @@ public class RnaStrucViewer3dPresenter {
                 } else{
                     SelectionModelPresenter.nucleotideSelectionModel.select(index);
                 }
-                refreshSelectionStatus(nucleotides);
+                MainPresenter.refreshAll();
             });
         }
 
@@ -241,21 +240,6 @@ public class RnaStrucViewer3dPresenter {
             });
         }
 
-    }
-
-    /**
-     * Checks the selection status for all nucleotides
-     * and updates coloring if necessary
-     * @param nucleotides An array of nucleotides
-     */
-    public void refreshSelectionStatus(Nucleotide[] nucleotides){
-        for (Nucleotide nucleotide : nucleotides) {
-            if(nucleotide.getSelectedProperty().getValue()){
-                nucleotide.setColor();
-            } else{
-                nucleotide.resetColor();
-            }
-        }
     }
 
 
@@ -367,6 +351,17 @@ public class RnaStrucViewer3dPresenter {
         model = new RnaStrucViewer3dModel();
         basePairs.clear();
         PseudoKnotSolver.bestSolutionLength = 0;
+    }
+
+    @Override
+    public void refreshSelectionStatus() {
+        for (Nucleotide nucleotide : nucleotides) {
+            if(nucleotide.getSelectedProperty().getValue()){
+                nucleotide.setColor();
+            } else{
+                nucleotide.resetColor();
+            }
+        }
     }
 
 }

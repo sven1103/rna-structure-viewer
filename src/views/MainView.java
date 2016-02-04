@@ -81,8 +81,6 @@ public class MainView {
 
         topViewContainer.getChildren().addAll(menuBar, view1d.pane1d);
 
-        topViewContainer.setFillWidth(true);
-
         controlsView.setTop(topViewContainer);
 
 
@@ -97,12 +95,13 @@ public class MainView {
 
         finalScene.getStylesheets().add("format.css");
 
-        //view1d.primStructureContainer.setPrefWidth(finalScene.getWidth()-2);
+        view1d.pane1d.setPrefWidth(finalScene.getWidth()-2);
+        view1d.primStructureContainer.setMinWidth(finalScene.getWidth()-2);
 
-        finalScene.heightProperty().addListener((observable, oldValue, newValue) -> {
-            view1d.primStructureContainer.setPrefWidth(finalScene.getWidth()-2);
+        finalScene.widthProperty().addListener((observable, oldValue, newValue) -> {
+            view1d.pane1d.setPrefWidth(finalScene.getWidth()-2);
+            view1d.primStructureContainer.setMinWidth(finalScene.getWidth()-2);
         });
 
-        view1d.primStructureContainer.autosize();
     }
 }

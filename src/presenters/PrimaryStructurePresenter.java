@@ -51,6 +51,8 @@ public class PrimaryStructurePresenter implements IRefresher {
 
             bindToSelectionModel(nucleotide, index);
         }
+
+        //view1d.pane1d.setMinViewportWidth(primaryModel.getNotation().getWidth());
     }
 
 

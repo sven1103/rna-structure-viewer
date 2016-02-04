@@ -49,7 +49,6 @@ public class PrimaryStructureView {
         pane1d = new ScrollPane();
         pane1d.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         pane1d.setContent(primStructureContainer);
-
     }
 
 

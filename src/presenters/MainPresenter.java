@@ -16,13 +16,17 @@ public class MainPresenter {
 
     public static PrimaryStructurePresenter primaryStructurePresenter;
 
+    public static SecondaryStructurePresenter secondaryStructurePresenter;
+
     public static void setUpMainPresenter(RnaStrucViewer3dPresenter _presenter3d,
                          RnaStrucViewer3dView _view3d,
-                         MainView _mainView, PrimaryStructurePresenter _primaryPresenter){
+                         MainView _mainView, PrimaryStructurePresenter _primaryPresenter,
+                                          SecondaryStructurePresenter _secondaryPresenter){
         presenter3d = _presenter3d;
         view3d = _view3d;
         mainView = _mainView;
         primaryStructurePresenter = _primaryPresenter;
+        secondaryStructurePresenter = _secondaryPresenter;
     }
 
     public static void refreshAll(){

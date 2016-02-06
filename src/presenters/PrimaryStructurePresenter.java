@@ -1,6 +1,7 @@
 package presenters;
 
 import javafx.beans.binding.BooleanBinding;
+import javafx.scene.text.TextFlow;
 import models.nucleotide1d.PrimaryStructureModel;
 import models.nucleotide1d.SimpleNucleotide;
 import views.PrimaryStructureView;
@@ -89,6 +90,17 @@ public class PrimaryStructurePresenter implements IRefresher {
 
         view1d.primStructureContainer.getChildren().addAll(primaryModel.getPrimaryStructure(), primaryModel.getNotation());
     }
+
+
+    public TextFlow getPrimaryStructure() {
+        return this.primaryModel.getPrimaryStructure();
+    }
+
+
+    public TextFlow getNotation() {
+        return this.primaryModel.getNotation();
+    }
+
 
     @Override
     public void refreshSelectionStatus() {

@@ -1,6 +1,7 @@
 package presenters;
 
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.binding.DoubleBinding;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -78,13 +79,31 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
         /*
         Bind the subscene width and height properties to the parent scene properties.
          */
-        view.scene3d.widthProperty().bind(mainView.finalScene.widthProperty());
-        view.scene3d.heightProperty().bind(mainView.finalScene.heightProperty());
+
+        view.scene3d.widthProperty().bind(new DoubleBinding() {
+            {
+                bind(mainView.finalScene.widthProperty());
+            }
+            @Override
+            protected double computeValue() {
+                return mainView.finalScene.widthProperty().get()/2;
+            }
+        });
+
+        view.scene3d.heightProperty().bind(new DoubleBinding() {
+            {
+                bind(mainView.finalScene.heightProperty());
+            }
+            @Override
+            protected double computeValue() {
+                return mainView.finalScene.heightProperty().get();
+            }
+        });
 
         /*
         Update camera when window is resized
          */
-        mainView.finalScene.widthProperty().addListener((observable, oldValue, newValue) -> {
+        view.scene3d.widthProperty().addListener((observable, oldValue, newValue) -> {
             view.camera.setTranslateX(-newValue.doubleValue()/2);
             view.update();
         });

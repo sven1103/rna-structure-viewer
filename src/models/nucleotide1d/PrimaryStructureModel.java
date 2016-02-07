@@ -1,7 +1,6 @@
 package models.nucleotide1d;
 
 import javafx.scene.text.TextFlow;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,18 +28,12 @@ public class PrimaryStructureModel {
 
     private List<SimpleNucleotide> primaryStructureList = new ArrayList<>();
     {
-        primaryStructureList.add(new SimpleNucleotide("A"));
-        primaryStructureList.add(new SimpleNucleotide("C"));
-        primaryStructureList.add(new SimpleNucleotide("G"));
-        primaryStructureList.add(new SimpleNucleotide("U"));
+        primaryStructureList.add(new SimpleNucleotide("Welcome to RVee 1.0"));
     }
 
     private List<SimpleNucleotide> annotationList = new ArrayList<>();
     {
-        annotationList.add(new SimpleNucleotide("("));
-        annotationList.add(new SimpleNucleotide("("));
-        annotationList.add(new SimpleNucleotide(")"));
-        annotationList.add(new SimpleNucleotide(")"));
+        annotationList.add(new SimpleNucleotide("Please load a pdb file first: File > Open"));
     }
 
 

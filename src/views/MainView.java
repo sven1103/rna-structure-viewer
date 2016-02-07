@@ -1,12 +1,12 @@
 package views;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import models.misc.GlobalSettings;
 
 /**
  * Created by sven on 2/2/16.
@@ -39,6 +39,14 @@ public class MainView {
 
     public MenuItem openFile;
 
+    public ColorPicker colorChooserGC;
+
+    public ColorPicker colorChooserAU;
+
+    public ToolBar tools;
+
+    public Slider slider;
+
     public static MainView getInstance(RnaStrucViewer3dView view3d, PrimaryStructureView view1d, SecondaryStructureView view2d){
         if(instance == null){
             synchronized (MainView.class){
@@ -64,6 +72,21 @@ public class MainView {
      * Initialize the main view
      */
     private void initView(){
+
+        tools = new ToolBar();
+
+        colorChooserGC = new ColorPicker(GlobalSettings.guanineColor);
+
+        colorChooserAU = new ColorPicker(GlobalSettings.uracilColor);
+
+        slider = new Slider(0.5, 10, 0.1);
+        slider.setValue(4);
+        slider.setPrefWidth(100);
+
+        tools.getItems().addAll(new Text("Color GC-pairs:"), colorChooserGC,
+                new Text("Color AU-pairs:"), colorChooserAU,
+                new Text("2D circle radius:"), slider);
+
         menuBar = new MenuBar();
 
         menu = new Menu("File");
@@ -78,7 +101,7 @@ public class MainView {
 
         topViewContainer = new VBox();
 
-        topViewContainer.getChildren().addAll(menuBar, view1d.pane1d);
+        topViewContainer.getChildren().addAll(menuBar, tools, view1d.pane1d);
 
         centerViewContainer = new HBox();
 

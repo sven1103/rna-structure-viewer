@@ -3,6 +3,8 @@ package presenters;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import models.misc.GlobalSettings;
+import models.nucleotide2d.drawings.AbstractNucleotideCircle;
 import views.MainView;
 import views.RnaStrucViewer3dView;
 
@@ -61,6 +63,29 @@ public class MainPresenter {
                 }
             }
         });
+
+
+        mainView.colorChooserGC.setOnAction(event -> {
+            if(!primaryStructurePresenter.getSequence().isEmpty()){
+                GlobalSettings.guanineColor = mainView.colorChooserGC.getValue();
+                GlobalSettings.cytosineColor = mainView.colorChooserGC.getValue();
+                GlobalSettings.refreshColors();
+                refreshAll();
+            }
+        });
+
+        mainView.colorChooserAU.setOnAction(event -> {
+            if(!primaryStructurePresenter.getSequence().isEmpty()) {
+                GlobalSettings.uracilColor = mainView.colorChooserGC.getValue();
+                GlobalSettings.adenineColor = mainView.colorChooserGC.getValue();
+                GlobalSettings.refreshColors();
+                refreshAll();
+            }
+        });
+
+
+
+
     }
 
     public static void refreshAll(){

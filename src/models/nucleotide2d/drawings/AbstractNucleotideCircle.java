@@ -1,8 +1,12 @@
 package models.nucleotide2d.drawings;
 
 
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
@@ -41,7 +45,7 @@ public class AbstractNucleotideCircle extends Group implements IColorizable {
 
     private final double DEFAULT_TEXT_SIZE = 10;
 
-    private final double DEFAULT_RADIUS = 4;
+    private DoubleProperty radiusProperty = new SimpleDoubleProperty(4);
 
     private final double DEFAULT_X_OFFSET = -4;
 
@@ -54,9 +58,9 @@ public class AbstractNucleotideCircle extends Group implements IColorizable {
     public AbstractNucleotideCircle(){
         super();
         //this.elementGroup = new Group();
-        this.circle = new Circle(DEFAULT_RADIUS);
-        this.shadow = new Circle(DEFAULT_RADIUS+1);
-        this.toolTipMask = new Circle(DEFAULT_RADIUS+1);
+        this.circle = new Circle(radiusProperty.doubleValue());
+        this.shadow = new Circle(radiusProperty.doubleValue()+1);
+        this.toolTipMask = new Circle(radiusProperty.doubleValue()+1);
         this.base = new Text("");
         this.base.setStyle("-fx-font-size: 12");
         this.shadow.setFill(Color.WHITE);
@@ -68,8 +72,30 @@ public class AbstractNucleotideCircle extends Group implements IColorizable {
         this.getChildren().addAll(this.shadow, this.circle, this.base, this.toolTipMask);
         this.base.layoutXProperty().setValue(this.circle.getCenterX()+DEFAULT_X_OFFSET);
         this.base.layoutYProperty().setValue(this.circle.getCenterY()+DEFAULT_Y_OFFSET);
+        setBindings();
     }
 
+    private void setBindings(){
+        circle.radiusProperty().bind(radiusProperty);
+        shadow.radiusProperty().bind(new DoubleBinding() {
+            {
+                bind(radiusProperty);
+            }
+            @Override
+            protected double computeValue() {
+                return radiusProperty.get()+1;
+            }
+        });
+        toolTipMask.radiusProperty().bind(new DoubleBinding() {
+            {
+                bind(radiusProperty);
+            }
+            @Override
+            protected double computeValue() {
+                return radiusProperty.get()+1;
+            }
+        });
+    }
 
 
     protected void setBaseType(){};
@@ -86,6 +112,10 @@ public class AbstractNucleotideCircle extends Group implements IColorizable {
 
     protected BaseType getBaseType(){
         return this.baseType;
+    }
+
+    public DoubleProperty getRadiusProperty(){
+        return this.radiusProperty;
     }
 
     @Override

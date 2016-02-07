@@ -202,6 +202,9 @@ public class SecondaryStructurePresenter implements IRefresher {
         addInteractivity();
         playAnimation(timeLineList);
         configureSelectionModel(nucleotides);
+        for(AbstractNucleotideCircle nucleotideCircle : nucleotides){
+            nucleotideCircle.getRadiusProperty().bind(mainView.slider.valueProperty());
+        }
     }
 
 
@@ -385,5 +388,9 @@ public class SecondaryStructurePresenter implements IRefresher {
                 nucleotide.resetColor();
             }
         }
+    }
+
+    public AbstractNucleotideCircle[] getNucleotides(){
+        return this.nucleotides;
     }
 }

@@ -30,17 +30,25 @@ public class GlobalSettings {
     public static Color neutralColor = Color.web("999999");
 
 
-    public static final HashMap<BaseType, Color> DEFAULT_BASE_COLORS = new HashMap<>();
+    public static HashMap<BaseType, Color> DEFAULT_BASE_COLORS = new HashMap<>();
+
+    public static HashMap<BaseType, PhongMaterial> DEFAULT_BASE_MATERIALS= new HashMap<>();
+
     static {
+        makeMaps();
+    }
+
+    public static void refreshColors(){
+        makeMaps();
+    }
+
+    private static void makeMaps(){
         DEFAULT_BASE_COLORS.put(BaseType.A, adenineColor);
         DEFAULT_BASE_COLORS.put(BaseType.C, cytosineColor);
         DEFAULT_BASE_COLORS.put(BaseType.G, guanineColor);
         DEFAULT_BASE_COLORS.put(BaseType.U, uracilColor);
         DEFAULT_BASE_COLORS.put(BaseType.N, neutralColor);
-    }
 
-    public static final HashMap<BaseType, PhongMaterial> DEFAULT_BASE_MATERIALS= new HashMap<>();
-    static {
         DEFAULT_BASE_MATERIALS.put(BaseType.A, new PhongMaterial(adenineColor));
         DEFAULT_BASE_MATERIALS.put(BaseType.C, new PhongMaterial(cytosineColor));
         DEFAULT_BASE_MATERIALS.put(BaseType.G, new PhongMaterial(guanineColor));

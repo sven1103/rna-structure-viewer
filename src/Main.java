@@ -45,6 +45,8 @@ public class Main extends Application{
 
         primaryStage.setScene(mainView.finalScene);
 
+        primaryStage.setTitle("RVee 1.0");
+
         primaryStage.show();
     }
 }

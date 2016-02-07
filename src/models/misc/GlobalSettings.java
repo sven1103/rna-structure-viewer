@@ -21,12 +21,15 @@ public class GlobalSettings {
 
     public static PhongMaterial RIBOSE_MATERIAL = new PhongMaterial(Color.GRAY);
 
+    public static PhongMaterial UNSELECTED_MATERIAL = new PhongMaterial(Color.GRAY);
+
+
     public static final HashMap<BaseType, PhongMaterial> DEFAULT_BASE_MATERIALS= new HashMap<>();
     static {
-        DEFAULT_BASE_MATERIALS.put(BaseType.A, new PhongMaterial(Color.LIGHTSKYBLUE));
-        DEFAULT_BASE_MATERIALS.put(BaseType.C, new PhongMaterial(Color.ORANGERED));
-        DEFAULT_BASE_MATERIALS.put(BaseType.G, new PhongMaterial(Color.ORANGERED));
-        DEFAULT_BASE_MATERIALS.put(BaseType.U, new PhongMaterial(Color.LIGHTSKYBLUE));
+        DEFAULT_BASE_MATERIALS.put(BaseType.A, new PhongMaterial(Color.web("0772A1")));
+        DEFAULT_BASE_MATERIALS.put(BaseType.C, new PhongMaterial(Color.web("00B74A")));
+        DEFAULT_BASE_MATERIALS.put(BaseType.G, new PhongMaterial(Color.web("00B74A")));
+        DEFAULT_BASE_MATERIALS.put(BaseType.U, new PhongMaterial(Color.web("0772A1")));
     }
 
     public static Color TEXT_SELECTED = Color.rgb(255,102,255);

@@ -101,6 +101,14 @@ public class PrimaryStructurePresenter implements IRefresher {
         return this.primaryModel.getNotation();
     }
 
+    public String getSequence(){
+        return this.primaryModel.getSequence();
+    }
+
+    public String getDotBracket(){
+        return this.primaryModel.getDotBracketString();
+    }
+
 
     @Override
     public void refreshSelectionStatus() {

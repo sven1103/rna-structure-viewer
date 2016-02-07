@@ -216,7 +216,7 @@ public class RnaStrucViewer3dModel {
 
         phosphateConnection.fullBondSet.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                bondList.add(phosphateConnection.createConnection(0.4));
+                bondList.add(phosphateConnection.createConnection(0.2));
                 phosphateConnection.resetBond();
             }
         });

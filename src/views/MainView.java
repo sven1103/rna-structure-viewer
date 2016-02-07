@@ -4,10 +4,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -84,8 +82,9 @@ public class MainView {
 
         centerViewContainer = new HBox();
 
-        centerViewContainer.getChildren().addAll(view2d.drawArea, view3d.scene3d);
+        centerViewContainer.getChildren().addAll(view2d.scene2d, view3d.scene3d);
 
+        centerViewContainer.setSpacing(2);
 
         controlsView.setTop(topViewContainer);
 
@@ -95,8 +94,6 @@ public class MainView {
         controlsView.setPickOnBounds(false);
 
         finalScene = new Scene(controlsView, INIT_SCENE_WIDTH, INIT_SCENE_HEIGHT);
-
-
 
         finalScene.getStylesheets().add("format.css");
 

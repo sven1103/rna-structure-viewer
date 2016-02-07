@@ -23,6 +23,8 @@ public class NucleotideFactory {
     public AbstractNucleotideCircle getNucleotide(NucleotideType type){
         AbstractNucleotideCircle requestedNucleotide;
 
+        System.out.println(type.toString());
+
         switch(type){
             case ADENINE:
                 requestedNucleotide = new Adenine();

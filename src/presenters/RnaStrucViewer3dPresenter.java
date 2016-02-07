@@ -2,9 +2,6 @@ package presenters;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.DoubleBinding;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -46,7 +43,6 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
 
     public MainView mainView;
 
-    final KeyCode DESELECTION = KeyCode.D;
 
     String helpMessage = String.format("Hold SHIFT for zooming in/out\n" +
             "Hold CTRL for moving the molecule\n" +
@@ -96,7 +92,7 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
             }
             @Override
             protected double computeValue() {
-                return mainView.finalScene.heightProperty().get();
+                return mainView.finalScene.getHeight() ;
             }
         });
 
@@ -109,22 +105,11 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
         });
 
         mainView.finalScene.heightProperty().addListener((observable, oldValue, newValue) -> {
-            view.camera.setTranslateY(-newValue.doubleValue()/2);
+            view.camera.setTranslateY(-newValue.doubleValue()/2 );
             view.update();
         });
 
-        mainView.finalScene.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if(event.getCode() == DESELECTION){
-                    if(SelectionModelPresenter.nucleotideSelectionModel != null){
-                        SelectionModelPresenter.nucleotideSelectionModel.clearSelection();
-                        MainPresenter.refreshAll();
-                    }
 
-                }
-            }
-        });
 
         view.scene3d.setOnMousePressed(event -> {
             mousePosX = event.getSceneX();
@@ -169,7 +154,7 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
                 new FileChooser.ExtensionFilter("PDB (pdb structure file)", "*.pdb"),
                 new FileChooser.ExtensionFilter("All files", "*.*"));
         // Set default directory
-        File defaultDirectory = new File("/home/fillinger/Downloads");
+        File defaultDirectory = new File("/home/sven/Downloads");
 
         if(defaultDirectory.exists())
             view.fileChooser.setInitialDirectory(defaultDirectory);
@@ -357,6 +342,7 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
         view.structures.getChildren().addAll(this.model.setHbondList(hBondCollection).getHBondAs3D());
 
         MainPresenter.primaryStructurePresenter.makePrimaryView(sequence.toString(), dotBracketNotation.toString());
+        MainPresenter.secondaryStructurePresenter.drawStructure();
 
         view.sendMessage(String.format("Sequence:\n%s", sequence.toString()));
         view.sendMessage(String.format("%s", dotBracketNotation.toString()));
@@ -375,7 +361,9 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
     @Override
     public void refreshSelectionStatus() {
         for (Nucleotide nucleotide : nucleotides) {
-            if(nucleotide.getSelectedProperty().getValue()){
+            if(SelectionModelPresenter.nucleotideSelectionModel.getSelectedIndices().isEmpty()){
+                nucleotide.setOriginalColor();
+            } else if(nucleotide.getSelectedProperty().getValue()){
                 nucleotide.setColor();
             } else{
                 nucleotide.resetColor();

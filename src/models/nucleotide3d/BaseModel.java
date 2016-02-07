@@ -87,11 +87,11 @@ public class BaseModel implements Cloneable, IColorizable{
 
     @Override
     public void resetColor() {
-        this.meshView.setMaterial(GlobalSettings.DEFAULT_BASE_MATERIALS.get(this.baseType));
+        this.meshView.setMaterial(GlobalSettings.UNSELECTED_MATERIAL);
     }
 
     @Override
     public void setOriginalColor() {
-
+        this.meshView.setMaterial(GlobalSettings.DEFAULT_BASE_MATERIALS.get(this.baseType));
     }
 }

@@ -31,11 +31,13 @@ public abstract class AbstractNucleotideCircle extends Group {
 
     //protected Group elementGroup;
 
-    private final double DEFAULT_RADIUS = 10;
+    private final double DEFAULT_TEXT_SIZE = 10;
 
-    private final double DEFAULT_X_OFFSET = -5;
+    private final double DEFAULT_RADIUS = 6;
 
-    private final double DEFAULT_Y_OFFSET = 4;
+    private final double DEFAULT_X_OFFSET = -4;
+
+    private final double DEFAULT_Y_OFFSET = 3;
 
     protected Tooltip tooltip;
 
@@ -46,6 +48,7 @@ public abstract class AbstractNucleotideCircle extends Group {
         this.shadow = new Circle(DEFAULT_RADIUS+1);
         this.toolTipMask = new Circle(DEFAULT_RADIUS+1);
         this.base = new Text("N");
+        this.base.setStyle("-fx-font-size: 12");
         this.shadow.setFill(Color.WHITE);
         this.base.setFill(Color.WHITE);
         this.base.getStyleClass().addAll("nucleotide_text");

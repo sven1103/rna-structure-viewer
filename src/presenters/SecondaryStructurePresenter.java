@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.beans.binding.DoubleBinding;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
@@ -14,6 +15,7 @@ import models.nucleotide2d.Graph;
 import models.nucleotide2d.SpringEmbedder;
 import models.nucleotide2d.drawings.AbstractNucleotideCircle;
 import models.nucleotide2d.drawings.NucleotideFactory;
+import utils.NucleotideLabeler;
 import views.MainView;
 import views.SecondaryStructureView;
 
@@ -68,19 +70,20 @@ public class SecondaryStructurePresenter {
 
             @Override
             protected double computeValue() {
-                return mainView.finalScene.heightProperty().get();
+                return mainView.finalScene.getHeight() - mainView.topViewContainer.getHeight();
             }
         });
+
     }
 
 
     /**
      * Draws the secondary structure in the drawArea
      */
-    private void drawStructure(){
+    public void drawStructure(){
 
         // clear the draw area :)
-        //view.drawArea.getChildren().clear();
+        view.drawArea.getChildren().clear();
 
         // Init a Graph object
         Graph structure = new Graph();
@@ -109,7 +112,8 @@ public class SecondaryStructurePresenter {
         try {
             double[][] initCoordinates;
             // The Parsing
-            structure.parseNotation(MainPresenter.primaryStructurePresenter.getNotation().toString());
+            structure.parseNotation(MainPresenter.primaryStructurePresenter.getDotBracket());
+
             // Assign the coordinates
             double[][] newCoordinates = SpringEmbedder.computeSpringEmbedding(50,
                     structure.getNumberOfNodes(), structure.getEdges(), null);
@@ -117,16 +121,16 @@ public class SecondaryStructurePresenter {
             initCoordinates = newCoordinates;
 
             // Center the coordinates with respect to the draw area size
-            SpringEmbedder.centerCoordinates(newCoordinates, 20, view.drawArea.widthProperty().intValue()-20,
-                    20, view.drawArea.heightProperty().intValue()-20);
+            SpringEmbedder.centerCoordinates(newCoordinates, 20, view.scene2d.widthProperty().intValue()-20,
+                    20, view.scene2d.heightProperty().intValue()-20);
 
             // Now generate the lines and nucleotide circles
             for (int i=0; i < newCoordinates.length; i++){
 
                 // Create NucleotideCircles dependent on the
                 // sequence character at position 'i'
-                Character base = MainPresenter.primaryStructurePresenter.getPrimaryStructure().toString().charAt(i);
-                AbstractNucleotideCircle nucleotideCircle = nucleotideFactory.getNucleotide(base.toString());
+                Character base = MainPresenter.primaryStructurePresenter.getSequence().charAt(i);
+                AbstractNucleotideCircle nucleotideCircle = nucleotideFactory.getNucleotide(NucleotideLabeler.getType(base));
                 nucleotideCircle.setLayoutX(initCoordinates[i][0]);
                 nucleotideCircle.setLayoutY(initCoordinates[i][1]);
                 nucleotideCircle.setTooltip(nucleotideCircle.getClass().

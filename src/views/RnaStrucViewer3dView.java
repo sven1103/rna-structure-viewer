@@ -5,6 +5,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -58,11 +60,28 @@ public class RnaStrucViewer3dView {
      */
     private void initView(){
 
+        Group composition = new Group();
+
+        AmbientLight backLight = new AmbientLight();
+        PointLight frontLight = new PointLight();
+        PointLight backLight2 = new PointLight();
+        backLight2.setColor(Color.WHITE);
+        frontLight.setColor(Color.web("#BBBBBB"));
+        frontLight.setRotate(90);
+        backLight.setColor(Color.web("#222222"));
+        backLight2.setTranslateX(150);
+        backLight2.setTranslateZ(50);
+        frontLight.setTranslateZ(-50);
+
+        composition.getChildren().addAll(backLight2, frontLight, backLight, structures);
+
+
         /*
         Make the scene
          */
-        scene3d = new SubScene(structures, INIT_SCENE_WIDTH, INIT_SCENE_HEIGHT, true, SceneAntialiasing.BALANCED);
-        scene3d.setFill(Color.WHITE);
+        scene3d = new SubScene(composition, INIT_SCENE_WIDTH, INIT_SCENE_HEIGHT, true, SceneAntialiasing.BALANCED);
+        scene3d.setFill(Color.web("#222222"));
+
 
         messageScreen = new TextArea("[Welcome] Ania to RNAView3D :)" +
                                      "\n------------------------------\n" +

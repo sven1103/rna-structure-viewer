@@ -21,6 +21,11 @@ public class PrimaryStructureModel {
 
     private TextFlow notation = new TextFlow();
 
+    private String sequence = "";
+
+    private String dotBracketString = "";
+
+
     private List<SimpleNucleotide> primaryStructureList = new ArrayList<>();
     {
         primaryStructureList.add(new SimpleNucleotide("A"));
@@ -51,6 +56,8 @@ public class PrimaryStructureModel {
 
     public void setNewStructure(String sequence, String notation){
         clearAll();
+        this.sequence = sequence;
+        this.dotBracketString = notation;
         for(Character nucleotide : sequence.toCharArray()){
             primaryStructureList.add(new SimpleNucleotide(nucleotide.toString()));
         }
@@ -81,6 +88,14 @@ public class PrimaryStructureModel {
 
     public List<SimpleNucleotide> getNotationList(){
         return this.annotationList;
+    }
+
+    public String getSequence(){
+       return sequence;
+    }
+
+    public String getDotBracketString(){
+        return dotBracketString;
     }
 
 }

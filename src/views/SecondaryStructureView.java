@@ -12,9 +12,9 @@ public class SecondaryStructureView {
 
     public SubScene scene2d;
 
-    public final double INIT_SCENE_WIDTH = 800;
+    public final double INIT_SCENE_WIDTH = 200;
 
-    public final double INIT_SCENE_HEIGHT = 600;
+    public final double INIT_SCENE_HEIGHT = 200;
 
     public static volatile SecondaryStructureView instance;
 

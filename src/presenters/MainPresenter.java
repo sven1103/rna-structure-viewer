@@ -56,7 +56,7 @@ public class MainPresenter {
                 if(event.getCode() == UPDATE_VIEW){
                     if(MainPresenter.presenter3d != null &&
                             MainPresenter.secondaryStructurePresenter != null){
-                        MainView.instance.view3d.update();
+                        view3d.reset();
                         secondaryStructurePresenter.drawStructure();
                         refreshAll();
                     }

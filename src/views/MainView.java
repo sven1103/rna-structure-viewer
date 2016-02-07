@@ -47,6 +47,8 @@ public class MainView {
 
     public Slider slider;
 
+    public TextArea messageScreen;
+
     public static MainView getInstance(RnaStrucViewer3dView view3d, PrimaryStructureView view1d, SecondaryStructureView view2d){
         if(instance == null){
             synchronized (MainView.class){
@@ -72,6 +74,11 @@ public class MainView {
      * Initialize the main view
      */
     private void initView(){
+
+        messageScreen = new TextArea("[Welcome] to RVee 1.0 :)" +
+                "\n------------------------------\n" +
+                "Open a pdb-file via FILE>OPEN");
+        messageScreen.setPrefHeight(75);
 
         tools = new ToolBar();
 
@@ -112,6 +119,8 @@ public class MainView {
         controlsView.setTop(topViewContainer);
 
         controlsView.setCenter(centerViewContainer);
+
+        controlsView.setBottom(messageScreen);
 
         topViewContainer.setPickOnBounds(false);
         controlsView.setPickOnBounds(false);

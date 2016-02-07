@@ -1,24 +1,24 @@
-package presenters;
+        package presenters;
 
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.binding.DoubleBinding;
-import javafx.scene.Cursor;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.util.Pair;
-import models.misc.Atom;
-import models.nucleotide3d.*;
-import models.pdb.PDBparser;
-import models.selection.MySelectionModel;
-import system.PDBparseException;
-import utils.PseudoKnotSolver;
-import views.MainView;
-import views.RnaStrucViewer3dView;
+        import javafx.beans.binding.BooleanBinding;
+        import javafx.beans.binding.DoubleBinding;
+        import javafx.scene.Cursor;
+        import javafx.stage.FileChooser;
+        import javafx.stage.Stage;
+        import javafx.util.Pair;
+        import models.misc.Atom;
+        import models.nucleotide3d.*;
+        import models.pdb.PDBparser;
+        import models.selection.MySelectionModel;
+        import system.PDBparseException;
+        import utils.PseudoKnotSolver;
+        import views.MainView;
+        import views.RnaStrucViewer3dView;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+        import java.io.File;
+        import java.util.ArrayList;
+        import java.util.HashSet;
+        import java.util.List;
 
 /**
  * Created by sven on 12/12/15.
@@ -129,8 +129,8 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
             if(event.isShiftDown()){
                 view.camera.setTranslateZ(view.camera.getTranslateZ() + mouseDeltaY);
             } else if(event.isControlDown()) {
-                view.structures.setTranslateX(view.structures.getTranslateX() + mouseDeltaX);
-                view.structures.setTranslateY(view.structures.getTranslateY() + mouseDeltaY);
+                view.camera.setTranslateX(view.camera.getTranslateX() - mouseDeltaX);
+                view.camera.setTranslateY(view.camera.getTranslateY() - mouseDeltaY);
             } else if(event.isSecondaryButtonDown()){
                 view.rz.setAngle(view.rz.getAngle() + mouseDeltaY);
             }else{
@@ -173,15 +173,12 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
 
             PDBparser parser = PDBparser.getInstance();
 
-            view.sendMessage("Parsing file: " + pdbFile.getName());
 
             try{
                 atomList = parser.parsePDB(pdbFile.getAbsolutePath()).getAtomList();
             } catch (PDBparseException e){
-                view.sendMessage("[ERROR]: Could not parse " + pdbFile.getName());
+                System.err.println(e);
             }
-
-            view.sendMessage(helpMessage);
 
             // TODO: Rename to NucleotideModel
             RiboseModel riboseModel = new RiboseModel();
@@ -351,8 +348,6 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
         MainPresenter.primaryStructurePresenter.makePrimaryView(sequence.toString(), dotBracketNotation.toString());
         MainPresenter.secondaryStructurePresenter.drawStructure();
 
-        view.sendMessage(String.format("Sequence:\n%s", sequence.toString()));
-        view.sendMessage(String.format("%s", dotBracketNotation.toString()));
     }
 
 

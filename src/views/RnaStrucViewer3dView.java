@@ -18,11 +18,9 @@ import javafx.stage.FileChooser;
  */
 public class RnaStrucViewer3dView {
 
-    public final double INIT_SCENE_WIDTH = 800;
+    public final double INIT_SCENE_WIDTH = 200;
 
-    public final double INIT_SCENE_HEIGHT = 600;
-
-    public TextArea messageScreen;
+    public final double INIT_SCENE_HEIGHT = 200;
 
     public static volatile RnaStrucViewer3dView instance;
 
@@ -83,17 +81,6 @@ public class RnaStrucViewer3dView {
         scene3d.setFill(Color.web("#222222"));
 
 
-        messageScreen = new TextArea("[Welcome] Ania to RNAView3D :)" +
-                                     "\n------------------------------\n" +
-                                     "Open a pdb-file via FILE>OPEN");
-
-        messageScreen.setMinHeight(20);
-
-        messageScreen.setStyle("-fx-font-family: monospace");
-
-        this.messageScreen.editableProperty().setValue(false);
-
-
 
         /*
         Set the camera for the scene
@@ -107,7 +94,6 @@ public class RnaStrucViewer3dView {
         camera.setFieldOfView(45);
 
         scene3d.setCamera(camera);
-
 
 
         /*
@@ -146,10 +132,12 @@ public class RnaStrucViewer3dView {
         this.camera.setTranslateZ(finalTranslateZ);
     }
 
-    public void sendMessage(String message){
-        this.messageScreen.appendText("\n");
-        this.messageScreen.appendText(message);
+    public void reset(){
+        update();
+        this.camera.setTranslateX(-scene3d.getWidth()/2);
+        this.camera.setTranslateY(-scene3d.getHeight()/2);
     }
+
 
 
 

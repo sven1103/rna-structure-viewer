@@ -201,7 +201,7 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
             configureSelectionModel(nucleotides);
 
             computeSecondaryStructure();
-            view.update();
+            view.reset();
         }
 
     }

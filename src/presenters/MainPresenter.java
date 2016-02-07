@@ -76,8 +76,8 @@ public class MainPresenter {
 
         mainView.colorChooserAU.setOnAction(event -> {
             if(!primaryStructurePresenter.getSequence().isEmpty()) {
-                GlobalSettings.uracilColor = mainView.colorChooserGC.getValue();
-                GlobalSettings.adenineColor = mainView.colorChooserGC.getValue();
+                GlobalSettings.uracilColor = mainView.colorChooserAU.getValue();
+                GlobalSettings.adenineColor = mainView.colorChooserAU.getValue();
                 GlobalSettings.refreshColors();
                 refreshAll();
             }

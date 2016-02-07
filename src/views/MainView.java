@@ -1,5 +1,6 @@
 package views;
 
+import javafx.beans.binding.DoubleBinding;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -136,6 +137,12 @@ public class MainView {
             view1d.pane1d.setPrefWidth(finalScene.getWidth()-2);
             view1d.primStructureContainer.setMinWidth(finalScene.getWidth()-2);
         });
+
+        System.err.println(finalScene.getHeight());
+        view2d.scene2d.setHeight(finalScene.getHeight() - 10);
+
+
+
 
     }
 }

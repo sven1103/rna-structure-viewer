@@ -66,7 +66,7 @@ public class RnaStrucViewer3dView {
         backLight2.setColor(Color.WHITE);
         frontLight.setColor(Color.web("#BBBBBB"));
         frontLight.setRotate(90);
-        backLight.setColor(Color.web("#222222"));
+        backLight.setColor(Color.web("#555555"));
         backLight2.setTranslateX(150);
         backLight2.setTranslateZ(50);
         frontLight.setTranslateZ(-50);
@@ -135,7 +135,7 @@ public class RnaStrucViewer3dView {
     public void reset(){
         update();
         this.camera.setTranslateX(-scene3d.getWidth()/2);
-        this.camera.setTranslateY(-scene3d.getHeight()/2);
+        this.camera.setTranslateY(-scene3d.getHeight()/2 + 10);
     }
 
 

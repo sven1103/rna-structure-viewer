@@ -127,8 +127,8 @@ public class SecondaryStructurePresenter implements IRefresher {
             initCoordinates = newCoordinates;
 
             // Center the coordinates with respect to the draw area size
-            SpringEmbedder.centerCoordinates(newCoordinates, 20, view.scene2d.widthProperty().intValue()-20,
-                    20, view.scene2d.heightProperty().intValue()-20);
+            SpringEmbedder.centerCoordinates(newCoordinates, 20, view.scene2d.widthProperty().intValue(),
+                    20, view.scene2d.heightProperty().intValue() -20);
 
             // Now generate the lines and nucleotide circles
             for (int i=0; i < newCoordinates.length; i++){

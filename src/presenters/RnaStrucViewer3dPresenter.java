@@ -2,6 +2,7 @@ package presenters;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.DoubleBinding;
+import javafx.scene.Cursor;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -217,8 +218,14 @@ public class RnaStrucViewer3dPresenter implements IRefresher{
 
         for(int i = 0; i < nucleotides.length; i++){
             final int index=i;
+            nucleotides[i].getNucleotide().setOnMouseEntered(event -> {
+                nucleotides[index].getNucleotide().setCursor(Cursor.CROSSHAIR);
+                MySelectionModel.multiSelectionHoverActivate(event, index);
+            });
+
+            nucleotides[i].getNucleotide().setOnMouseExited(event -> nucleotides[index].getNucleotide().setCursor(Cursor.DEFAULT));
             nucleotides[i].getNucleotide().setOnMouseClicked((e) ->{
-                if(!e.isShiftDown()){
+                if(!e.isControlDown()){
                     SelectionModelPresenter.nucleotideSelectionModel.clearSelection();
                 }
                 if(SelectionModelPresenter.nucleotideSelectionModel.isSelected(index)){

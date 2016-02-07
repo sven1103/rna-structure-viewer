@@ -91,14 +91,7 @@ public class Simple3DViewerWithSelection extends Application {
         for (int i = 0; i < shapes.length; i++) {
             final int index=i;
             shapes[i].setOnMouseClicked((e) -> {
-                if(!e.isShiftDown())
-                    mySelectionModel.clearSelection();
-                if(mySelectionModel.isSelected(index)) {
-                    mySelectionModel.clearSelection(index);
-                }
-                else {
-                    mySelectionModel.select(index);
-                }
+                MySelectionModel.multiSelectionHoverActivate(e, index);
             });
         }
 

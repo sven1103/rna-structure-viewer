@@ -4,7 +4,9 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.DoubleBinding;
+import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
@@ -15,6 +17,8 @@ import models.nucleotide2d.Graph;
 import models.nucleotide2d.SpringEmbedder;
 import models.nucleotide2d.drawings.AbstractNucleotideCircle;
 import models.nucleotide2d.drawings.NucleotideFactory;
+import models.selection.MySelectionModel;
+import sun.applet.Main;
 import utils.NucleotideLabeler;
 import views.MainView;
 import views.SecondaryStructureView;
@@ -36,7 +40,7 @@ import static java.lang.Math.random;
  * Date: 11/24/15
  * EMail: sven.fillinger@student.uni-tuebingen.de
  */
-public class SecondaryStructurePresenter {
+public class SecondaryStructurePresenter implements IRefresher {
 
     private final SecondaryStructureView view;
 
@@ -44,6 +48,8 @@ public class SecondaryStructurePresenter {
 
     private double lastX;
     private double lastY;
+
+    private AbstractNucleotideCircle[] nucleotides;
 
 
     /**
@@ -179,8 +185,12 @@ public class SecondaryStructurePresenter {
             view.drawArea.getChildren().addAll(basePairing);
 
             // Add the nucleotides to the SceneGraph
+            nucleotides = new AbstractNucleotideCircle[nucleotideList.size()];
+            int counter = 0;
             for (AbstractNucleotideCircle nucleotide : nucleotideList){
                 view.drawArea.getChildren().addAll(nucleotide);
+                nucleotides[counter] = nucleotide;
+                counter++;
             }
 
         } catch (IOException e){
@@ -191,6 +201,50 @@ public class SecondaryStructurePresenter {
         // to the graphic elements :)
         addInteractivity();
         playAnimation(timeLineList);
+        configureSelectionModel(nucleotides);
+    }
+
+
+    /**
+     * Configures the selection model correctly
+     * @param nucleotides An array of Nucleotide() objects
+     */
+    public void configureSelectionModel(AbstractNucleotideCircle[] nucleotides){
+
+        for(int i = 0; i < nucleotides.length; i++){
+            final int index=i;
+            nucleotides[i].setOnMouseEntered(e -> {
+                nucleotides[index].setCursor(Cursor.CROSSHAIR);
+                MySelectionModel.multiSelectionHoverActivate(e, index);
+            });
+
+            nucleotides[i].setOnMouseClicked((e) ->{
+                if(!e.isControlDown()){
+                    SelectionModelPresenter.nucleotideSelectionModel.clearSelection();
+                }
+                if(SelectionModelPresenter.nucleotideSelectionModel.isSelected(index)){
+                    SelectionModelPresenter.nucleotideSelectionModel.clearSelection(index);
+                } else{
+                    SelectionModelPresenter.nucleotideSelectionModel.select(index);
+                }
+                MainPresenter.refreshAll();
+            });
+        }
+
+        // bind visibility of bounding boxes to selection state
+        for(int i=0; i<nucleotides.length; i++) {
+            final int index=i;
+            nucleotides[i].getIsSelectedProperty().bind(new BooleanBinding() {
+                {
+                    bind(SelectionModelPresenter.nucleotideSelectionModel.getSelectedIndices());
+                }
+                @Override
+                protected boolean computeValue() {
+                    return SelectionModelPresenter.nucleotideSelectionModel.getSelectedIndices().contains(index);
+                }
+            });
+        }
+
     }
 
 
@@ -210,10 +264,8 @@ public class SecondaryStructurePresenter {
      */
     private void addInteractivity(){
 
-        List<Node> nodeList = view.drawArea.getChildren();
-        for (Node nucleotide : nodeList){
+        for (Node nucleotide : nucleotides){
 
-            nucleotide.setOnMouseEntered(event -> nucleotide.setCursor(Cursor.MOVE));
             nucleotide.setOnMousePressed(event -> {
                 lastX = nucleotide.getLayoutX();
                 lastY = nucleotide.getLayoutY();
@@ -224,7 +276,6 @@ public class SecondaryStructurePresenter {
             });
             nucleotide.setOnMouseReleased(event -> makeTimeline(nucleotide, lastX, lastY, Duration.millis(100)).play());
 
-            nucleotide.setOnMouseExited(value -> nucleotide.setCursor(Cursor.DEFAULT));
 
         }
     }
@@ -323,4 +374,16 @@ public class SecondaryStructurePresenter {
     }
 
 
+    @Override
+    public void refreshSelectionStatus() {
+        for (AbstractNucleotideCircle nucleotide : nucleotides){
+            if(SelectionModelPresenter.nucleotideSelectionModel.getSelectedIndices().isEmpty()){
+                nucleotide.setOriginalColor();
+            } else if(nucleotide.getIsSelectedProperty().getValue()){
+                nucleotide.setColor();
+            } else{
+                nucleotide.resetColor();
+            }
+        }
+    }
 }

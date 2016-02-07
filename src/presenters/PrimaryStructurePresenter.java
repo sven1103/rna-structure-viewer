@@ -1,9 +1,11 @@
 package presenters;
 
 import javafx.beans.binding.BooleanBinding;
+import javafx.scene.Cursor;
 import javafx.scene.text.TextFlow;
 import models.nucleotide1d.PrimaryStructureModel;
 import models.nucleotide1d.SimpleNucleotide;
+import models.selection.MySelectionModel;
 import views.PrimaryStructureView;
 
 import java.util.List;
@@ -71,8 +73,17 @@ public class PrimaryStructurePresenter implements IRefresher {
     }
 
     private void setSelectionModelConnection(SimpleNucleotide nucleotide, int index){
+
+        nucleotide.setOnMouseEntered(e -> {
+            nucleotide.setCursor(Cursor.CROSSHAIR);
+            MySelectionModel.multiSelectionHoverActivate(e, index);
+        });
+        nucleotide.setOnMouseExited(e -> {
+            nucleotide.setCursor(Cursor.DEFAULT);
+        });
+
         nucleotide.setOnMouseClicked(e -> {
-            if(!e.isShiftDown()){
+            if(!e.isControlDown()){
                 SelectionModelPresenter.nucleotideSelectionModel.clearSelection();
             }
             if(SelectionModelPresenter.nucleotideSelectionModel.isSelected(index)){
@@ -87,8 +98,8 @@ public class PrimaryStructurePresenter implements IRefresher {
     private void init(){
         primaryModel.getPrimaryStructure().getStyleClass().addAll("nucleotide_text");
         primaryModel.getNotation().getStyleClass().addAll("nucleotide_text");
-
-        view1d.primStructureContainer.getChildren().addAll(primaryModel.getPrimaryStructure(), primaryModel.getNotation());
+        primaryModel.getRuler().getStyleClass().addAll("nucleotide_text");
+        view1d.primStructureContainer.getChildren().addAll(primaryModel.getRuler(), primaryModel.getPrimaryStructure(), primaryModel.getNotation());
     }
 
 

@@ -1,6 +1,8 @@
 package models.nucleotide2d.drawings;
 
 import javafx.scene.paint.Color;
+import models.misc.GlobalSettings;
+import models.nucleotide3d.BaseType;
 
 
 /**
@@ -19,7 +21,8 @@ public class Cytosine extends AbstractNucleotideCircle {
 
     public Cytosine() {
         super();
-        this.setColor(Color.rgb(110,38,121));
+        this.circle.setFill(GlobalSettings.cytosineColor);
+        this.baseType = BaseType.C;
         setTooltip("C");
         setBaseType();
     }
@@ -27,7 +30,7 @@ public class Cytosine extends AbstractNucleotideCircle {
 
     @Override
     protected void setBaseType() {
-        this.base.setText("C");
+        this.base.setText("");
     }
 
 

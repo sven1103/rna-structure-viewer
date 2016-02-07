@@ -1,6 +1,8 @@
 package models.nucleotide2d.drawings;
 
 import javafx.scene.paint.Color;
+import models.misc.GlobalSettings;
+import models.nucleotide3d.BaseType;
 
 /**
  * advanced-java-bioinformatics
@@ -17,14 +19,15 @@ public class Uracil extends AbstractNucleotideCircle {
 
     public Uracil(){
         super();
-        this.setColor(Color.rgb(163,179,54));
+        this.circle.setFill(GlobalSettings.uracilColor);
         setTooltip("U");
         setBaseType();
     }
 
     @Override
     protected void setBaseType() {
-        this.base.setText("U");
+        this.baseType = BaseType.U;
+        setOriginalColor();
     }
 
 

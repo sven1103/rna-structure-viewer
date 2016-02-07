@@ -1,11 +1,17 @@
 package models.nucleotide2d.drawings;
 
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import models.misc.GlobalSettings;
+import models.nucleotide3d.BaseType;
+import models.nucleotide3d.IColorizable;
 
 
 /**
@@ -19,7 +25,7 @@ import javafx.scene.text.Text;
  * Date: 11/26/15
  * EMail: sven.fillinger@student.uni-tuebingen.de
  */
-public abstract class AbstractNucleotideCircle extends Group {
+public class AbstractNucleotideCircle extends Group implements IColorizable {
 
     protected Circle circle;
 
@@ -29,11 +35,13 @@ public abstract class AbstractNucleotideCircle extends Group {
 
     protected Circle toolTipMask;
 
+    protected BaseType baseType;
+
     //protected Group elementGroup;
 
     private final double DEFAULT_TEXT_SIZE = 10;
 
-    private final double DEFAULT_RADIUS = 6;
+    private final double DEFAULT_RADIUS = 4;
 
     private final double DEFAULT_X_OFFSET = -4;
 
@@ -41,13 +49,15 @@ public abstract class AbstractNucleotideCircle extends Group {
 
     protected Tooltip tooltip;
 
+    protected BooleanProperty isSelected = new SimpleBooleanProperty(false);
+
     public AbstractNucleotideCircle(){
         super();
         //this.elementGroup = new Group();
         this.circle = new Circle(DEFAULT_RADIUS);
         this.shadow = new Circle(DEFAULT_RADIUS+1);
         this.toolTipMask = new Circle(DEFAULT_RADIUS+1);
-        this.base = new Text("N");
+        this.base = new Text("");
         this.base.setStyle("-fx-font-size: 12");
         this.shadow.setFill(Color.WHITE);
         this.base.setFill(Color.WHITE);
@@ -60,17 +70,9 @@ public abstract class AbstractNucleotideCircle extends Group {
         this.base.layoutYProperty().setValue(this.circle.getCenterY()+DEFAULT_Y_OFFSET);
     }
 
-    public AbstractNucleotideCircle(double x, double y){
-        this();
-        this.layoutXProperty().setValue(x);
-        this.layoutYProperty().setValue(y);
-    }
 
-    protected void setColor(Color color){
-        this.circle.setFill(color);
-    }
 
-    abstract protected void setBaseType();
+    protected void setBaseType(){};
 
     public void setTooltip(String message) {
         this.tooltip = new Tooltip(message);
@@ -78,5 +80,26 @@ public abstract class AbstractNucleotideCircle extends Group {
         Tooltip.install(this.toolTipMask, this.tooltip);
     }
 
+    public BooleanProperty getIsSelectedProperty(){
+        return this.isSelected;
+    }
 
+    protected BaseType getBaseType(){
+        return this.baseType;
+    }
+
+    @Override
+    public void setColor() {
+        this.circle.setFill(GlobalSettings.TEXT_SELECTED);
+    }
+
+    @Override
+    public void resetColor() {
+        this.circle.setFill(GlobalSettings.DEFAULT_BASE_COLORS.get(BaseType.N));
+    }
+
+    @Override
+    public void setOriginalColor() {
+        this.circle.setFill(GlobalSettings.DEFAULT_BASE_COLORS.get(this.baseType));
+    }
 }

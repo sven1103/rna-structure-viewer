@@ -1,6 +1,8 @@
 package models.nucleotide2d.drawings;
 
 import javafx.scene.paint.Color;
+import models.misc.GlobalSettings;
+import models.nucleotide3d.BaseType;
 
 /**
  * advanced-java-bioinformatics
@@ -17,7 +19,8 @@ public class Guanine extends AbstractNucleotideCircle {
 
     public Guanine(){
         super();
-        this.setColor(Color.rgb(43,79,120));
+        this.circle.setFill(GlobalSettings.guanineColor);
+        this.baseType = BaseType.G;
         setTooltip("G");
         setBaseType();
     }
@@ -25,7 +28,7 @@ public class Guanine extends AbstractNucleotideCircle {
 
     @Override
     protected void setBaseType() {
-        this.base.setText("G");
+        this.base.setText("");
     }
 
 

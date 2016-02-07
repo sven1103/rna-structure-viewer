@@ -56,6 +56,7 @@ public class MainPresenter {
                             MainPresenter.secondaryStructurePresenter != null){
                         MainView.instance.view3d.update();
                         secondaryStructurePresenter.drawStructure();
+                        refreshAll();
                     }
                 }
             }
@@ -65,6 +66,7 @@ public class MainPresenter {
     public static void refreshAll(){
         presenter3d.refreshSelectionStatus();
         primaryStructurePresenter.refreshSelectionStatus();
+        secondaryStructurePresenter.refreshSelectionStatus();
     }
 
 

@@ -1,6 +1,5 @@
 package models.nucleotide1d;
 
-import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
@@ -20,6 +19,8 @@ public class PrimaryStructureModel {
     private TextFlow primaryStructure = new TextFlow();
 
     private TextFlow notation = new TextFlow();
+
+    private TextFlow ruler = new TextFlow();
 
     private String sequence = "";
 
@@ -56,10 +57,26 @@ public class PrimaryStructureModel {
 
     public void setNewStructure(String sequence, String notation){
         clearAll();
+        int index = 1;
+        int whiteSpace = 9;
+        ruler.getChildren().addAll(new SimpleNucleotide(Integer.toString(index)));
         this.sequence = sequence;
         this.dotBracketString = notation;
         for(Character nucleotide : sequence.toCharArray()){
             primaryStructureList.add(new SimpleNucleotide(nucleotide.toString()));
+            if(index % 10 == 0){
+                ruler.getChildren().addAll(new SimpleNucleotide(Integer.toString(index)));
+                whiteSpace = 10 - String.valueOf(index).length();
+            } else{
+                if(index != 1) {
+                    if(whiteSpace > 0){
+                        ruler.getChildren().addAll(new SimpleNucleotide(" "));
+                        whiteSpace--;
+                    }
+
+                }
+            }
+            index++;
         }
         for(Character notationChar : notation.toCharArray()){
             annotationList.add(new SimpleNucleotide(notationChar.toString()));
@@ -72,6 +89,7 @@ public class PrimaryStructureModel {
         annotationList.clear();
         primaryStructure.getChildren().clear();
         notation.getChildren().clear();
+        ruler.getChildren().clear();
     }
 
     public TextFlow getPrimaryStructure(){
@@ -82,6 +100,7 @@ public class PrimaryStructureModel {
         return this.notation;
     }
 
+    public TextFlow getRuler(){ return this.ruler; }
     public List<SimpleNucleotide> getStructureList(){
         return this.primaryStructureList;
     }

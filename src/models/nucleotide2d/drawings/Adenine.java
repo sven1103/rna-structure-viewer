@@ -1,6 +1,7 @@
 package models.nucleotide2d.drawings;
 
-import javafx.scene.paint.Color;
+import models.misc.GlobalSettings;
+import models.nucleotide3d.BaseType;
 
 /**
  * advanced-java-bioinformatics
@@ -18,14 +19,8 @@ public class Adenine extends AbstractNucleotideCircle {
 
     public Adenine(){
         super();
-        this.setColor(Color.rgb(184,133,56));
-        setTooltip("A");
-        setBaseType();
-    }
-
-    public Adenine(double x, double y){
-        super(x, y);
-        this.setColor(Color.rgb(184,133,56));
+        this.circle.setFill(GlobalSettings.adenineColor);
+        this.baseType = BaseType.A;
         setTooltip("A");
         setBaseType();
     }
@@ -33,7 +28,7 @@ public class Adenine extends AbstractNucleotideCircle {
 
     @Override
     protected void setBaseType() {
-        this.base.setText("A");
+        this.base.setText("");
     }
 
 

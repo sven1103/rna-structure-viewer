@@ -4,7 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
+import javafx.event.Event;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import presenters.MainPresenter;
+import presenters.SelectionModelPresenter;
 
 import java.util.Arrays;
 
@@ -171,5 +176,18 @@ public class MySelectionModel<T> extends MultipleSelectionModel<T> {
     public void selectNext() {
         if (focusIndex >= 0 && focusIndex + 1 < items.length)
             select(++focusIndex);
+    }
+
+    public static void multiSelectionHoverActivate(MouseEvent e, int index){
+        if(e.isShiftDown()){
+            if(e.isShiftDown()){
+                if(SelectionModelPresenter.nucleotideSelectionModel.getSelectedIndices().contains(index)){
+                    SelectionModelPresenter.nucleotideSelectionModel.clearSelection(index);
+                } else{
+                    SelectionModelPresenter.nucleotideSelectionModel.select(index);
+                }
+                MainPresenter.refreshAll();
+            }
+        }
     }
 }

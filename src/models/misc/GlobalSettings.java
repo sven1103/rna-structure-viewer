@@ -23,13 +23,28 @@ public class GlobalSettings {
 
     public static PhongMaterial UNSELECTED_MATERIAL = new PhongMaterial(Color.GRAY);
 
+    public static Color adenineColor = Color.web("0772A1");
+    public static Color cytosineColor = Color.web("00B74A");
+    public static Color guanineColor = Color.web("00B74A");
+    public static Color uracilColor = Color.web("0772A1");
+    public static Color neutralColor = Color.web("999999");
+
+
+    public static final HashMap<BaseType, Color> DEFAULT_BASE_COLORS = new HashMap<>();
+    static {
+        DEFAULT_BASE_COLORS.put(BaseType.A, adenineColor);
+        DEFAULT_BASE_COLORS.put(BaseType.C, cytosineColor);
+        DEFAULT_BASE_COLORS.put(BaseType.G, guanineColor);
+        DEFAULT_BASE_COLORS.put(BaseType.U, uracilColor);
+        DEFAULT_BASE_COLORS.put(BaseType.N, neutralColor);
+    }
 
     public static final HashMap<BaseType, PhongMaterial> DEFAULT_BASE_MATERIALS= new HashMap<>();
     static {
-        DEFAULT_BASE_MATERIALS.put(BaseType.A, new PhongMaterial(Color.web("0772A1")));
-        DEFAULT_BASE_MATERIALS.put(BaseType.C, new PhongMaterial(Color.web("00B74A")));
-        DEFAULT_BASE_MATERIALS.put(BaseType.G, new PhongMaterial(Color.web("00B74A")));
-        DEFAULT_BASE_MATERIALS.put(BaseType.U, new PhongMaterial(Color.web("0772A1")));
+        DEFAULT_BASE_MATERIALS.put(BaseType.A, new PhongMaterial(adenineColor));
+        DEFAULT_BASE_MATERIALS.put(BaseType.C, new PhongMaterial(cytosineColor));
+        DEFAULT_BASE_MATERIALS.put(BaseType.G, new PhongMaterial(guanineColor));
+        DEFAULT_BASE_MATERIALS.put(BaseType.U, new PhongMaterial(uracilColor));
     }
 
     public static Color TEXT_SELECTED = Color.rgb(255,102,255);
